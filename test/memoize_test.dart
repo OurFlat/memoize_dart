@@ -55,6 +55,19 @@ void main() {
       expect(func(rect), 2);
       expect(func(rect), 2);
     });
+
+    test('should remove old cache when maxSize set', () {
+      var count = 0;
+      var func = memo1((int a) => ++count, maxSize: 2);
+      expect(func(1), 1);
+      expect(func(1), 1);
+      expect(func(2), 2);
+      expect(func(2), 2);
+      expect(func(1), 1);
+      expect(func(3), 3);
+      // At this point, first cache element should be removed
+      expect(func(1), 4);
+    });
   });
 
   group('imemo1', () {

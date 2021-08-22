@@ -39,11 +39,13 @@ Func0<R> memo0<R>(Func0<R> func) {
 
 /// Checks 1 argument for equality with [==] operator and returns the cached
 /// result if it was not changed.
-Func1<A, R> memo1<A, R>(Func1<A, R> func) {
+Func1<A, R> memo1<A, R>(Func1<A, R> func, {int? maxSize}) {
   final argsToOutput = HashMap<List, R>(
     equals: (a, b) => _listEquals(a, b),
     hashCode: (l) => _listHashCode(l),
   );
+  // External list to keep track of cache order
+  final hashes = <int>[];
 
   return ((A aA) {
     final cached = argsToOutput[[aA]];
@@ -52,6 +54,16 @@ Func1<A, R> memo1<A, R>(Func1<A, R> func) {
     } else {
       final res = func(aA);
       argsToOutput[[aA]] = res;
+      // Skip the whole thing if user doesn't use it
+      if (maxSize != null) {
+        hashes.add(_listHashCode([aA]));
+        if (argsToOutput.length > maxSize) {
+          // Pop the first (oldest) one
+          // I'm not sure how efficient this is :/
+          argsToOutput.removeWhere((k, _) => _listHashCode(k) == hashes[0]);
+          hashes.removeAt(0);
+        }
+      }
       return res;
     }
   });
