@@ -45,7 +45,7 @@ Func0<R> memo0<R>(Func0<R> func) {
 
 /// Checks 1 argument for equality with [==] operator and returns the cached
 /// result if it was not changed.
-Func1<A, R> memo1<A, R>(Func1<A, R> func) {
+Func1<A, R> memo1<A, R>(Func1<A, R> func, {int maxSize = 200}) {
   final argsToOutput = LinkedHashMap<List, R>(
     equals: (a, b) => _listEquals(a, b),
     hashCode: (l) => _listHashCode(l),
@@ -58,6 +58,7 @@ Func1<A, R> memo1<A, R>(Func1<A, R> func) {
     } else {
       final res = func(aA);
       argsToOutput[[aA]] = res;
+      _checkSize(maxSize, argsToOutput);
       return res;
     }
   });
@@ -65,7 +66,7 @@ Func1<A, R> memo1<A, R>(Func1<A, R> func) {
 
 /// Checks 2 arguments for equality with [==] operator and returns the cached
 /// result if they were not changed.
-Func2<A, B, R> memo2<A, B, R>(Func2<A, B, R> func) {
+Func2<A, B, R> memo2<A, B, R>(Func2<A, B, R> func, {int maxSize = 200}) {
   final argsToOutput = LinkedHashMap<List, R>(
     equals: (a, b) => _listEquals(a, b),
     hashCode: (l) => _listHashCode(l),
@@ -78,6 +79,7 @@ Func2<A, B, R> memo2<A, B, R>(Func2<A, B, R> func) {
     } else {
       final res = func(aA, aB);
       argsToOutput[[aA, aB]] = res;
+      _checkSize(maxSize, argsToOutput);
       return res;
     }
   });
@@ -106,7 +108,7 @@ Func3<A, B, C, R> memo3<A, B, C, R>(Func3<A, B, C, R> func, {int maxSize = 200})
 
 /// Checks 4 arguments for equality with [==] operator and returns the cached
 /// result if they were not changed.
-Func4<A, B, C, D, R> memo4<A, B, C, D, R>(Func4<A, B, C, D, R> func) {
+Func4<A, B, C, D, R> memo4<A, B, C, D, R>(Func4<A, B, C, D, R> func, {int maxSize = 200}) {
   final argsToOutput = LinkedHashMap<List, R>(
     equals: (a, b) => _listEquals(a, b),
     hashCode: (l) => _listHashCode(l),
@@ -119,6 +121,7 @@ Func4<A, B, C, D, R> memo4<A, B, C, D, R>(Func4<A, B, C, D, R> func) {
     } else {
       final res = func(aA, aB, aC, aD);
       argsToOutput[[aA, aB, aC, aD]] = res;
+      _checkSize(maxSize, argsToOutput);
       return res;
     }
   });
@@ -126,7 +129,7 @@ Func4<A, B, C, D, R> memo4<A, B, C, D, R>(Func4<A, B, C, D, R> func) {
 
 /// Checks 5 arguments for equality with [==] operator and returns the cached
 /// result if it was not changed.
-Func5<A, B, C, D, E, R> memo5<A, B, C, D, E, R>(Func5<A, B, C, D, E, R> func) {
+Func5<A, B, C, D, E, R> memo5<A, B, C, D, E, R>(Func5<A, B, C, D, E, R> func, {int maxSize = 200}) {
   final argsToOutput = LinkedHashMap<List, R>(
     equals: (a, b) => _listEquals(a, b),
     hashCode: (l) => _listHashCode(l),
@@ -139,6 +142,7 @@ Func5<A, B, C, D, E, R> memo5<A, B, C, D, E, R>(Func5<A, B, C, D, E, R> func) {
     } else {
       final res = func(aA, aB, aC, aD, aE);
       argsToOutput[[aA, aB, aC, aD, aE]] = res;
+      _checkSize(maxSize, argsToOutput);
       return res;
     }
   });
@@ -147,7 +151,7 @@ Func5<A, B, C, D, E, R> memo5<A, B, C, D, E, R>(Func5<A, B, C, D, E, R> func) {
 /// Checks 6 arguments for equality with [==] operator and returns the cached
 /// result if it was not changed.
 Func6<A, B, C, D, E, F, R> memo6<A, B, C, D, E, F, R>(
-    Func6<A, B, C, D, E, F, R> func) {
+    Func6<A, B, C, D, E, F, R> func, {int maxSize = 200}) {
   final argsToOutput = LinkedHashMap<List, R>(
     equals: (a, b) => _listEquals(a, b),
     hashCode: (l) => _listHashCode(l),
@@ -160,6 +164,7 @@ Func6<A, B, C, D, E, F, R> memo6<A, B, C, D, E, F, R>(
     } else {
       final res = func(aA, aB, aC, aD, aE, aF);
       argsToOutput[[aA, aB, aC, aD, aE, aF]] = res;
+      _checkSize(maxSize, argsToOutput);
       return res;
     }
   });
@@ -168,7 +173,7 @@ Func6<A, B, C, D, E, F, R> memo6<A, B, C, D, E, F, R>(
 /// Checks 7 arguments for equality with [==] operator and returns the cached
 /// result if it was not changed.
 Func7<A, B, C, D, E, F, G, R> memo7<A, B, C, D, E, F, G, R>(
-    Func7<A, B, C, D, E, F, G, R> func) {
+    Func7<A, B, C, D, E, F, G, R> func, {int maxSize = 200}) {
   final argsToOutput = LinkedHashMap<List, R>(
     equals: (a, b) => _listEquals(a, b),
     hashCode: (l) => _listHashCode(l),
@@ -181,6 +186,7 @@ Func7<A, B, C, D, E, F, G, R> memo7<A, B, C, D, E, F, G, R>(
     } else {
       final res = func(aA, aB, aC, aD, aE, aF, aG);
       argsToOutput[[aA, aB, aC, aD, aE, aF, aG]] = res;
+      _checkSize(maxSize, argsToOutput);
       return res;
     }
   });
@@ -189,7 +195,7 @@ Func7<A, B, C, D, E, F, G, R> memo7<A, B, C, D, E, F, G, R>(
 /// Checks 8 arguments for equality with [==] operator and returns the cached
 /// result if it was not changed.
 Func8<A, B, C, D, E, F, G, H, R> memo8<A, B, C, D, E, F, G, H, R>(
-    Func8<A, B, C, D, E, F, G, H, R> func) {
+    Func8<A, B, C, D, E, F, G, H, R> func, {int maxSize = 200}) {
   final argsToOutput = LinkedHashMap<List, R>(
     equals: (a, b) => _listEquals(a, b),
     hashCode: (l) => _listHashCode(l),
@@ -202,6 +208,7 @@ Func8<A, B, C, D, E, F, G, H, R> memo8<A, B, C, D, E, F, G, H, R>(
     } else {
       final res = func(aA, aB, aC, aD, aE, aF, aG, aH);
       argsToOutput[[aA, aB, aC, aD, aE, aF, aG, aH]] = res;
+      _checkSize(maxSize, argsToOutput);
       return res;
     }
   });
@@ -210,7 +217,7 @@ Func8<A, B, C, D, E, F, G, H, R> memo8<A, B, C, D, E, F, G, H, R>(
 /// Checks 9 arguments for equality with [==] operator and returns the cached
 /// result if it was not changed.
 Func9<A, B, C, D, E, F, G, H, I, R> memo9<A, B, C, D, E, F, G, H, I, R>(
-    Func9<A, B, C, D, E, F, G, H, I, R> func) {
+    Func9<A, B, C, D, E, F, G, H, I, R> func, {int maxSize = 200}) {
   final argsToOutput = LinkedHashMap<List, R>(
     equals: (a, b) => _listEquals(a, b),
     hashCode: (l) => _listHashCode(l),
@@ -223,6 +230,7 @@ Func9<A, B, C, D, E, F, G, H, I, R> memo9<A, B, C, D, E, F, G, H, I, R>(
     } else {
       final res = func(aA, aB, aC, aD, aE, aF, aG, aH, aI);
       argsToOutput[[aA, aB, aC, aD, aE, aF, aG, aH, aI]] = res;
+      _checkSize(maxSize, argsToOutput);
       return res;
     }
   });
@@ -231,7 +239,7 @@ Func9<A, B, C, D, E, F, G, H, I, R> memo9<A, B, C, D, E, F, G, H, I, R>(
 /// Checks 10 arguments for equality with [==] operator and returns cached
 /// result if it was not changed.
 Func10<A, B, C, D, E, F, G, H, I, J, R> memo10<A, B, C, D, E, F, G, H, I, J, R>(
-    Func10<A, B, C, D, E, F, G, H, I, J, R> func) {
+    Func10<A, B, C, D, E, F, G, H, I, J, R> func, {int maxSize = 200}) {
   final argsToOutput = LinkedHashMap<List, R>(
     equals: (a, b) => _listEquals(a, b),
     hashCode: (l) => _listHashCode(l),
@@ -244,6 +252,7 @@ Func10<A, B, C, D, E, F, G, H, I, J, R> memo10<A, B, C, D, E, F, G, H, I, J, R>(
     } else {
       final res = func(aA, aB, aC, aD, aE, aF, aG, aH, aI, aJ);
       argsToOutput[[aA, aB, aC, aD, aE, aF, aG, aH, aI, aJ]] = res;
+      _checkSize(maxSize, argsToOutput);
       return res;
     }
   });
