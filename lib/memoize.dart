@@ -14,6 +14,12 @@ bool _listEquals<T>(List<T>? a, List<T>? b) {
   return true;
 }
 
+void _checkSize(int maxSize, LinkedHashMap argsToOutput) {
+  if (argsToOutput.length == maxSize) {
+    argsToOutput.remove(argsToOutput.keys.first);
+  }
+}
+
 int _listHashCode(List list) {
   var hashCode = 0;
   for (final el in list) hashCode = hashCode ^ el.hashCode;
@@ -40,7 +46,7 @@ Func0<R> memo0<R>(Func0<R> func) {
 /// Checks 1 argument for equality with [==] operator and returns the cached
 /// result if it was not changed.
 Func1<A, R> memo1<A, R>(Func1<A, R> func) {
-  final argsToOutput = HashMap<List, R>(
+  final argsToOutput = LinkedHashMap<List, R>(
     equals: (a, b) => _listEquals(a, b),
     hashCode: (l) => _listHashCode(l),
   );
@@ -60,7 +66,7 @@ Func1<A, R> memo1<A, R>(Func1<A, R> func) {
 /// Checks 2 arguments for equality with [==] operator and returns the cached
 /// result if they were not changed.
 Func2<A, B, R> memo2<A, B, R>(Func2<A, B, R> func) {
-  final argsToOutput = HashMap<List, R>(
+  final argsToOutput = LinkedHashMap<List, R>(
     equals: (a, b) => _listEquals(a, b),
     hashCode: (l) => _listHashCode(l),
   );
@@ -79,8 +85,8 @@ Func2<A, B, R> memo2<A, B, R>(Func2<A, B, R> func) {
 
 /// Checks 3 arguments for equality with [==] operator and returns the cached
 /// result if they were not changed.
-Func3<A, B, C, R> memo3<A, B, C, R>(Func3<A, B, C, R> func) {
-  final argsToOutput = HashMap<List, R>(
+Func3<A, B, C, R> memo3<A, B, C, R>(Func3<A, B, C, R> func, {int maxSize = 200}) {
+  final argsToOutput = LinkedHashMap<List, R>(
     equals: (a, b) => _listEquals(a, b),
     hashCode: (l) => _listHashCode(l),
   );
@@ -92,6 +98,7 @@ Func3<A, B, C, R> memo3<A, B, C, R>(Func3<A, B, C, R> func) {
     } else {
       final res = func(aA, aB, aC);
       argsToOutput[[aA, aB, aC]] = res;
+      _checkSize(maxSize, argsToOutput);
       return res;
     }
   });
@@ -100,7 +107,7 @@ Func3<A, B, C, R> memo3<A, B, C, R>(Func3<A, B, C, R> func) {
 /// Checks 4 arguments for equality with [==] operator and returns the cached
 /// result if they were not changed.
 Func4<A, B, C, D, R> memo4<A, B, C, D, R>(Func4<A, B, C, D, R> func) {
-  final argsToOutput = HashMap<List, R>(
+  final argsToOutput = LinkedHashMap<List, R>(
     equals: (a, b) => _listEquals(a, b),
     hashCode: (l) => _listHashCode(l),
   );
@@ -120,7 +127,7 @@ Func4<A, B, C, D, R> memo4<A, B, C, D, R>(Func4<A, B, C, D, R> func) {
 /// Checks 5 arguments for equality with [==] operator and returns the cached
 /// result if it was not changed.
 Func5<A, B, C, D, E, R> memo5<A, B, C, D, E, R>(Func5<A, B, C, D, E, R> func) {
-  final argsToOutput = HashMap<List, R>(
+  final argsToOutput = LinkedHashMap<List, R>(
     equals: (a, b) => _listEquals(a, b),
     hashCode: (l) => _listHashCode(l),
   );
@@ -141,7 +148,7 @@ Func5<A, B, C, D, E, R> memo5<A, B, C, D, E, R>(Func5<A, B, C, D, E, R> func) {
 /// result if it was not changed.
 Func6<A, B, C, D, E, F, R> memo6<A, B, C, D, E, F, R>(
     Func6<A, B, C, D, E, F, R> func) {
-  final argsToOutput = HashMap<List, R>(
+  final argsToOutput = LinkedHashMap<List, R>(
     equals: (a, b) => _listEquals(a, b),
     hashCode: (l) => _listHashCode(l),
   );
@@ -162,7 +169,7 @@ Func6<A, B, C, D, E, F, R> memo6<A, B, C, D, E, F, R>(
 /// result if it was not changed.
 Func7<A, B, C, D, E, F, G, R> memo7<A, B, C, D, E, F, G, R>(
     Func7<A, B, C, D, E, F, G, R> func) {
-  final argsToOutput = HashMap<List, R>(
+  final argsToOutput = LinkedHashMap<List, R>(
     equals: (a, b) => _listEquals(a, b),
     hashCode: (l) => _listHashCode(l),
   );
@@ -183,7 +190,7 @@ Func7<A, B, C, D, E, F, G, R> memo7<A, B, C, D, E, F, G, R>(
 /// result if it was not changed.
 Func8<A, B, C, D, E, F, G, H, R> memo8<A, B, C, D, E, F, G, H, R>(
     Func8<A, B, C, D, E, F, G, H, R> func) {
-  final argsToOutput = HashMap<List, R>(
+  final argsToOutput = LinkedHashMap<List, R>(
     equals: (a, b) => _listEquals(a, b),
     hashCode: (l) => _listHashCode(l),
   );
@@ -204,7 +211,7 @@ Func8<A, B, C, D, E, F, G, H, R> memo8<A, B, C, D, E, F, G, H, R>(
 /// result if it was not changed.
 Func9<A, B, C, D, E, F, G, H, I, R> memo9<A, B, C, D, E, F, G, H, I, R>(
     Func9<A, B, C, D, E, F, G, H, I, R> func) {
-  final argsToOutput = HashMap<List, R>(
+  final argsToOutput = LinkedHashMap<List, R>(
     equals: (a, b) => _listEquals(a, b),
     hashCode: (l) => _listHashCode(l),
   );
@@ -225,7 +232,7 @@ Func9<A, B, C, D, E, F, G, H, I, R> memo9<A, B, C, D, E, F, G, H, I, R>(
 /// result if it was not changed.
 Func10<A, B, C, D, E, F, G, H, I, J, R> memo10<A, B, C, D, E, F, G, H, I, J, R>(
     Func10<A, B, C, D, E, F, G, H, I, J, R> func) {
-  final argsToOutput = HashMap<List, R>(
+  final argsToOutput = LinkedHashMap<List, R>(
     equals: (a, b) => _listEquals(a, b),
     hashCode: (l) => _listHashCode(l),
   );
